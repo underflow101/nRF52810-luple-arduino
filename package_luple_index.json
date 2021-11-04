@@ -1,6 +1,8 @@
 {
     "packages": [
       {
+        "name": "Luple nRF52810",
+        "maintainer": "Luple",
         "websiteURL": "https://www.luple.co.kr",
         "tools": [
           {
@@ -57,7 +59,9 @@
                 "size": "117164633"
               }
             ]
-          },
+          }
+        ],
+      "platforms": [
           {
             "name": "CMSIS",
             "version": "5.4.0",
@@ -373,7 +377,9 @@
             "name": "wiced_dfu",
             "version": "1.0.0"
           }
-        ],
+        ]
+      }
+    ],
           "name": "Luple nRF52810",
           "architecture": "nrf52",
           "version": "0.0.1",
@@ -407,6 +413,4 @@
               "version": "5.7.0"
             }
           ]
-      }
-    ]
   }
