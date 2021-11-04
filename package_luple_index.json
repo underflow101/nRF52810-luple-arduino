@@ -9,8 +9,8 @@
                 "architecture": "nrf52",
                 "version": "0.0.1",
                 "category": "Luple",
-                "url": "https://github.com/underflow101/nRF52810-luple-arduino/raw/master/nrfluple.zip",
-                "archiveFileName": "adafruit-nrf52-0.24.0.tar.bz2",
+                "url": "https://github.com/underflow101/nRF52810-luple-arduino/blob/master/nrfluple.zip?raw=true",
+                "archiveFileName": "nrfluple.zip",
                 "checksum": "SHA-256:8110ce9cd4ba9a242a4238b0af93a6e8c16b67cf87b4a446faf240b0c1afc33f",
                 "size": "295407869",
                 "help": {
