@@ -23,17 +23,17 @@
                 ],
                 "toolsDependencies": [
                     {
-                    "packager": "adafruit",
+                    "packager": "Luple",
                     "name": "arm-none-eabi-gcc",
                     "version": "9-2019q4"
                     },
                     {
-                    "packager": "adafruit",
+                    "packager": "Luple",
                     "name": "nrfjprog",
                     "version": "9.4.0"
                     },
                     {
-                    "packager": "adafruit",
+                    "packager": "Luple",
                     "name": "CMSIS",
                     "version": "5.7.0"
                     }
