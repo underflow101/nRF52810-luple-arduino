@@ -10,9 +10,9 @@
                 "version": "0.0.1",
                 "category": "Luple",
                 "url": "https://github.com/underflow101/nRF52810-luple-arduino/blob/master/nrfluple.zip?raw=true",
-                "archiveFileName": "nrfluple.zip",
-                "checksum": "SHA-256:8110ce9cd4ba9a242a4238b0af93a6e8c16b67cf87b4a446faf240b0c1afc33f",
-                "size": "295407869",
+                "archiveFileName": "nrfluple-0.0.1.tar.bz2",
+                "checksum": "SHA-256:3011ae429035faa342fbc28c0c9ac045a04bcb564e67e69c36ee1c8ceda57eb4",
+                "size": "246472562",
                 "help": {
                     "online": "https://www.luple.co.kr"
                 },
