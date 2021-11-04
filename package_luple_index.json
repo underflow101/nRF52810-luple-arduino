@@ -1,11 +1,11 @@
 {
     "packages": [
         {
-            "name": "Luple nRF52810",
+            "name": "Luple",
             "maintainer": "Luple",
             "websiteURL": "https://www.luple.co.kr",
             "platforms": [{
-                "name": "Luple",
+                "name": "Luple nRF52810",
                 "architecture": "nrf52",
                 "version": "0.0.1",
                 "category": "Luple",
