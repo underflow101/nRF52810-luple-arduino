@@ -1,18 +1,18 @@
 {
     "packages": [
         {
-            "name": "Luple",
+            "name": "Luple nRF52810",
             "maintainer": "Luple",
             "websiteURL": "https://www.luple.co.kr",
             "platforms": [{
                 "name": "Luple",
                 "architecture": "nrf52",
-                "version": "0.0.1",
+                "version": "0.1.0",
                 "category": "Luple",
-                "url": "https://github.com/underflow101/nRF52810-luple-arduino/blob/master/nrfluple-0.0.1.tar.bz2?raw=true",
-                "archiveFileName": "nrfluple-0.0.1.tar.bz2",
-                "checksum": "SHA-256:a29b353969501889f9dd5f3b016c7145eab147dd78ed5b5cef7538c9b8a54376",
-                "size": "16353850",
+                "url": "https://github.com/underflow101/nRF52810-luple-arduino/blob/master/nrfluple-0.1.0.tar.bz2?raw=true",
+                "archiveFileName": "nrfluple-0.1.0.tar.bz2",
+                "checksum": "SHA-256:2388361e8db02ea7921f9e907d56ed8ac471ce004b559d1547a35a31856f7f9e",
+                "size": "16354949",
                 "help": {
                     "online": "https://www.luple.co.kr"
                 },

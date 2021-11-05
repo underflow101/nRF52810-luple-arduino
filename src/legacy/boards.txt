@@ -1,0 +1,49 @@
+# Copyright (c) 2014-2015 Arduino LLC.  All right reserved.
+# Copyright (c) 2016 Sandeep Mistry All right reserved.
+# Copyright (c) 2021 Luple Inc.  All right reserved.
+
+menu.softdevice=SoftDevice
+menu.debug=Debug
+
+# ----------------------------------
+# nRF52810 Luple
+# ----------------------------------
+luple52810.name=Luple nRF52810
+luple52810.bootloader.tool=bootburn
+
+# Upload
+luple52810.upload.tool=nrfutil
+luple52810.upload.protocol=nrfutil
+luple52810.upload.use_1200bps_touch=false
+luple52810.upload.wait_for_upload_port=false
+luple52810.upload.native_usb=false
+luple52810.upload.maximum_size=60000
+luple52810.upload.maximum_data_size=24000
+
+# Build
+luple52810.build.mcu=cortex-m4
+luple52810.build.f_cpu=64000000
+luple52810.build.board=NRF52810
+luple52810.build.core=nRF5
+luple52810.build.variant=luple_nrf52810
+luple52810.build.usb_manufacturer="Luple Inc"
+luple52810.build.usb_product="Luple nRF52810"
+luple52810.build.extra_flags=-DNRF52810_XXAA -DNRF52
+luple52810.build.ldscript=armgcc_s112_nrf52810_xxaa.ld
+
+# SoftDevice Menu
+luple52810.menu.softdevice.s112=S112 6.1.1
+luple52810.menu.softdevice.s112.build.sd_name=s112
+luple52810.menu.softdevice.s112.build.sd_version=6.1.1
+luple52810.menu.softdevice.s112.build.sd_fwid=0x00B8
+
+# Debug Menu
+luple52810.menu.debug.l0=Level 0 (Release)
+luple52810.menu.debug.l0.build.debug_flags=-DCFG_DEBUG=0
+luple52810.menu.debug.l1=Level 1 (Error Message)
+luple52810.menu.debug.l1.build.debug_flags=-DCFG_DEBUG=1
+luple52810.menu.debug.l2=Level 2 (Full Debug)
+luple52810.menu.debug.l2.build.debug_flags=-DCFG_DEBUG=2
+luple52810.menu.debug.l3=Level 3 (Segger SystemView)
+luple52810.menu.debug.l3.build.debug_flags=-DCFG_DEBUG=3
+luple52810.menu.debug.l3.build.sysview_flags=-DCFG_SYSVIEW=1
