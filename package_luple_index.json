@@ -1,7 +1,7 @@
 {
     "packages": [
         {
-            "name": "Luple nRF52810",
+            "name": "Luple Boards",
             "maintainer": "Luple",
             "websiteURL": "https://www.luple.co.kr",
             "platforms": [{
