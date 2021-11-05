@@ -5,7 +5,7 @@
             "maintainer": "Luple",
             "websiteURL": "https://www.luple.co.kr",
             "platforms": [{
-                "name": "Luple",
+                "name": "Luple Boards",
                 "architecture": "nrf52",
                 "version": "0.1.0",
                 "category": "Luple",
