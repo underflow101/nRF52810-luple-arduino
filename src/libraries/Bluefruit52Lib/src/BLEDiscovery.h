@@ -33,6 +33,7 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 /**************************************************************************/
+#ifdef NRF52877_XXAA
 #ifndef BLEDISCOVERY_H_
 #define BLEDISCOVERY_H_
 
@@ -113,3 +114,4 @@ class BLEDiscovery
 };
 
 #endif /* BLEDISCOVERY_H_ */
+#endif /* NRF52832_XXAA */

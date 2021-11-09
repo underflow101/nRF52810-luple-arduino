@@ -34,6 +34,7 @@
 */
 /**************************************************************************/
 
+#ifdef NRF52877_XXAA
 #include "bluefruit.h"
 
 BLEScanner::BLEScanner(void)
@@ -414,3 +415,4 @@ void BLEScanner::_eventHandler(ble_evt_t* evt)
     default: break;
   }
 }
+#endif /* NRF52832_XXAA */

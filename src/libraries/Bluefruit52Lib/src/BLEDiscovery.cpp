@@ -34,6 +34,7 @@
 */
 /**************************************************************************/
 
+#ifdef NRF52877_XXAA
 #include "bluefruit.h"
 
 BLEDiscovery::BLEDiscovery(void)
@@ -282,4 +283,4 @@ void BLEDiscovery::_eventHandler(ble_evt_t* evt)
   }
 }
 
-
+#endif /* NRF52832_XXAA */

@@ -34,6 +34,7 @@
 */
 /**************************************************************************/
 
+#ifdef NRF52877_XXAA
 #include "bluefruit.h"
 
 void BLEClientCharacteristic::_init(void)
@@ -542,3 +543,4 @@ void BLEClientCharacteristic::_eventHandler(ble_evt_t* evt)
   }
 }
 
+#endif /* NRF52832_XXAA */

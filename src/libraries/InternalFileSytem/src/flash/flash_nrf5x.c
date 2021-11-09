@@ -36,6 +36,9 @@
   #define BOOTLOADER_ADDR        0x74000
 #endif
 
+#define BOOTLOADER_ADDR 0x28000
+#define SD_ADDR         0x1000
+
 // defined in linker script
 extern uint32_t __flash_arduino_start[];
 //extern uint32_t __flash_arduino_end[];
@@ -81,7 +84,8 @@ void flash_nrf5x_flush (void)
 int flash_nrf5x_write (uint32_t dst, void const * src, uint32_t len)
 {
   // Softdevice region
-  VERIFY(dst >= ((uint32_t) __flash_arduino_start), -1);
+  // VERIFY(dst >= ((uint32_t) __flash_arduino_start), -1);
+  VERIFY(dst >= ((uint32_t) SD_ADDR), -1);
 
   // Bootloader region
   VERIFY(dst < BOOTLOADER_ADDR, -1);
@@ -139,7 +143,7 @@ static uint32_t fal_program (uint32_t dst, void const * src, uint32_t len)
   // Somehow S140 v6.1.1 assert an error when writing a whole page
   // https://devzone.nordicsemi.com/f/nordic-q-a/40088/sd_flash_write-cause-nrf_fault_id_sd_assert
   // Workaround: write half page at a time.
-#if NRF52832_XXAA
+#ifdef NRF52832_XXAA
   while ( NRF_ERROR_BUSY == (err = sd_flash_write((uint32_t*) dst, (uint32_t const *) src, len/4)) )
   {
     delay(1);

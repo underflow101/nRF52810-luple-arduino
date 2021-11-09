@@ -3,7 +3,7 @@
 # Copyright (c) 2021 Luple Inc.  All right reserved.
 
 name=Luple nRF52810 Board
-version=0.0.1
+version=0.2.0
 
 # Compile variables
 # -----------------

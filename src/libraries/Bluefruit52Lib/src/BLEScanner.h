@@ -33,6 +33,7 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 /**************************************************************************/
+#ifdef NRF52877_XXAA
 #ifndef BLESCANNER_H_
 #define BLESCANNER_H_
 
@@ -121,3 +122,4 @@ private:
 
 
 #endif /* BLESCANNER_H_ */
+#endif /* NRF52832_XXAA */

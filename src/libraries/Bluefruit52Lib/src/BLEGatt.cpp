@@ -42,7 +42,9 @@ BLEGatt::BLEGatt(void)
   : _adamsg()
 {
   varclr(&_server);
+#ifdef NRF52877_XXAA
   varclr(&_client);
+#endif
 }
 
 uint16_t BLEGatt::readCharByUuid(uint16_t conn_hdl, BLEUuid bleuuid, void* buffer, uint16_t bufsize, uint16_t start_hdl, uint16_t end_hdl)
@@ -147,6 +149,7 @@ void BLEGatt::_eventHandler(ble_evt_t* evt)
     }
   }
 
+#ifdef NRF52877_XXAA
   /*------------- Client Characteristics -------------*/
   for(int i=0; i<_client.chr_count; i++)
   {
@@ -201,6 +204,7 @@ void BLEGatt::_eventHandler(ble_evt_t* evt)
       }
     }
   }
+#endif /* NRF52877_XXAA */
 
   // GATTC Read Characteristic by UUID procedure
   switch ( evt_id )
@@ -246,6 +250,7 @@ bool BLEGatt::_addService(BLEService* svc)
   return true;
 }
 
+#ifdef NRF52877_XXAA
 /*------------------------------------------------------------------*/
 /* Client
  *------------------------------------------------------------------*/
@@ -285,3 +290,4 @@ bool BLEGatt::_addService(BLEClientService* svc)
 
   return true;
 }
+#endif /* NRF52877_XXAA */

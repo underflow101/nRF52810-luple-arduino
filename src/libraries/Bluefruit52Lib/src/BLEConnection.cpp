@@ -151,6 +151,8 @@ static inline bool is_tx_power_valid(int8_t power)
   int8_t const accepted[] = { -40, -20, -16, -12, -8, -4, 0, 3, 4 };
 #elif defined( NRF52840_XXAA)
   int8_t const accepted[] = { -40, -20, -16, -12, -8, -4, 0, 2, 3, 4, 5, 6, 7, 8 };
+#else
+  int8_t const accepted[] = { -40, -20, -16, -12, -8, -4, 0, 4 };
 #endif
 
   for (uint32_t i=0; i<sizeof(accepted); i++)
@@ -176,7 +178,7 @@ bool BLEConnection::requestMtuExchange(uint16_t mtu)
 
 bool BLEConnection::requestDataLengthUpdate(ble_gap_data_length_params_t const *p_dl_params, ble_gap_data_length_limitation_t *p_dl_limitation)
 {
-  VERIFY_STATUS(sd_ble_gap_data_length_update(_conn_hdl, p_dl_params, p_dl_limitation), false);
+  // VERIFY_STATUS(sd_ble_gap_data_length_update(_conn_hdl, p_dl_params, p_dl_limitation), false);
   return true;
 }
 
@@ -354,6 +356,7 @@ void BLEConnection::_eventHandler(ble_evt_t* evt)
       LOG_LV1("GAP", "ATT MTU is changed to %d", _mtu);
     break;
 
+#ifdef NRF52877_XXAA
     //------------- Data Length -------------//
     case BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST:
     {
@@ -364,7 +367,7 @@ void BLEConnection::_eventHandler(ble_evt_t* evt)
               param->max_tx_octets, param->max_rx_octets, param->max_tx_time_us, param->max_rx_time_us);
 
       // Let Softdevice decide the data length
-      VERIFY_STATUS( sd_ble_gap_data_length_update(_conn_hdl, NULL, NULL), );
+      // VERIFY_STATUS( sd_ble_gap_data_length_update(_conn_hdl, NULL, NULL), );
     }
     break;
 
@@ -379,6 +382,7 @@ void BLEConnection::_eventHandler(ble_evt_t* evt)
       _data_length = datalen->max_tx_octets;
     }
     break;
+#endif /* NRF52877_XXAA */
 
     //------------- PHY -------------//
     case BLE_GAP_EVT_PHY_UPDATE_REQUEST:

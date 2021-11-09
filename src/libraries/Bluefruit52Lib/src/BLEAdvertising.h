@@ -38,13 +38,9 @@
 
 #include <Arduino.h>
 #include "bluefruit_common.h"
-#include "BLEClientService.h"
 
 #include "BLEUuid.h"
 #include "BLEService.h"
-
-#include "services/BLEBeacon.h"
-#include "services/EddyStone.h"
 
 /* Advertising Guideline from Apple
  * https://developer.apple.com/library/content/qa/qa1931/_index.html
@@ -100,8 +96,10 @@ public:
   bool addService(BLEService& service1, BLEService& service2, BLEService& service3);
   bool addService(BLEService& service1, BLEService& service2, BLEService& service3, BLEService& service4);
 
+#ifdef NRF52877_XXAA
   /*------------- Client Service -------------*/
   bool addService(BLEClientService& service);
+#endif /* NRF52877_XXAA */
 
   // Functions to work with the raw advertising packet
   uint8_t  count(void);
@@ -131,8 +129,10 @@ public:
 
   uint16_t getInterval(void);
 
+#ifdef NRF52877_XXAA
   bool setBeacon(BLEBeacon& beacon);
   bool setBeacon(EddyStoneUrl& eddy_url);
+#endif /* NRF52877_XXAA */
 
   bool isRunning(void);
 

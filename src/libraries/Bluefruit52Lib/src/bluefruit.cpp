@@ -52,7 +52,7 @@
 #ifdef USB_PRODUCT
   #define CFG_DEFAULT_NAME    USB_PRODUCT
 #else
-  #define CFG_DEFAULT_NAME    "Feather nRF52832"
+  #define CFG_DEFAULT_NAME    "Luple nRF52810"
 #endif
 
 #ifdef USE_TINYUSB
@@ -163,13 +163,18 @@ AdafruitBluefruit::AdafruitBluefruit(void)
   _sd_cfg.prph.hvn_qsize   = BLE_GATTS_HVN_TX_QUEUE_SIZE_DEFAULT;
   _sd_cfg.prph.wrcmd_qsize = BLE_GATTC_WRITE_CMD_TX_QUEUE_SIZE_DEFAULT;
 
+#ifdef NRF52877_XXAA
   _sd_cfg.central.mtu_max     = BLE_GATT_ATT_MTU_DEFAULT;
   _sd_cfg.central.event_len   = BLE_GAP_EVENT_LENGTH_DEFAULT;
   _sd_cfg.central.hvn_qsize   = BLE_GATTS_HVN_TX_QUEUE_SIZE_DEFAULT;
   _sd_cfg.central.wrcmd_qsize = BLE_GATTC_WRITE_CMD_TX_QUEUE_SIZE_DEFAULT;
+#endif
 
   _prph_count    = 0;
+
+#ifdef NRF52877_XXAA
   _central_count = 0;
+#endif
 
   memclr(_connection, sizeof(_connection));
 
@@ -213,14 +218,15 @@ void AdafruitBluefruit::configPrphConn(uint16_t mtu_max, uint16_t event_len, uin
   _sd_cfg.prph.wrcmd_qsize = wrcmd_qsize;
 }
 
+#ifdef NRF52877_XXAA
 void AdafruitBluefruit::configCentralConn(uint16_t mtu_max, uint16_t event_len, uint8_t hvn_qsize, uint8_t wrcmd_qsize)
 {
   _sd_cfg.central.mtu_max     = maxof(mtu_max, BLE_GATT_ATT_MTU_DEFAULT);;
   _sd_cfg.central.event_len   = maxof(event_len, BLE_GAP_EVENT_LENGTH_MIN);
   _sd_cfg.central.hvn_qsize   = hvn_qsize;
   _sd_cfg.central.wrcmd_qsize = wrcmd_qsize;
-
 }
+#endif
 
 void AdafruitBluefruit::configPrphBandwidth(uint8_t bw)
 {
@@ -251,6 +257,7 @@ void AdafruitBluefruit::configPrphBandwidth(uint8_t bw)
   }
 }
 
+#ifdef NRF52877_XXAA
 void AdafruitBluefruit::configCentralBandwidth(uint8_t bw)
 {
   /* Note default value from SoftDevice are
@@ -279,11 +286,15 @@ void AdafruitBluefruit::configCentralBandwidth(uint8_t bw)
     default: break;
   }
 }
+#endif /* NRF52832_XXAA */
 
 bool AdafruitBluefruit::begin(uint8_t prph_count, uint8_t central_count)
 {
   _prph_count    = prph_count;
+
+#ifdef NRF52877_XXAA
   _central_count = central_count;
+#endif
 
 #ifdef USE_TINYUSB
   usb_softdevice_pre_enable();
@@ -357,8 +368,11 @@ bool AdafruitBluefruit::begin(uint8_t prph_count, uint8_t central_count)
   // Roles
   varclr(&blecfg);
   blecfg.gap_cfg.role_count_cfg.periph_role_count  = _prph_count;
+
+#ifdef NRF52877_XXAA
   blecfg.gap_cfg.role_count_cfg.central_role_count = _central_count;
   blecfg.gap_cfg.role_count_cfg.central_sec_count  = (_central_count ? 1 : 0); // 1 should be enough
+#endif
   VERIFY_STATUS( sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &blecfg, ram_start), false );
 
   // Device Name
@@ -404,6 +418,7 @@ bool AdafruitBluefruit::begin(uint8_t prph_count, uint8_t central_count)
     VERIFY_STATUS ( sd_ble_cfg_set(BLE_CONN_CFG_GATTC, &blecfg, ram_start), false );
   }
 
+#ifdef NRF52877_XXAA
   if ( _central_count)
   {
     // ATT MTU
@@ -431,6 +446,7 @@ bool AdafruitBluefruit::begin(uint8_t prph_count, uint8_t central_count)
     blecfg.conn_cfg.params.gattc_conn_cfg.write_cmd_tx_queue_size = _sd_cfg.central.wrcmd_qsize;
     VERIFY_STATUS ( sd_ble_cfg_set(BLE_CONN_CFG_GATTC, &blecfg, ram_start), false );
   }
+#endif /* NRF52832_XXAA */
 
   // Enable BLE stack
   // The memory requirement for a specific configuration will not increase
@@ -462,8 +478,10 @@ bool AdafruitBluefruit::begin(uint8_t prph_count, uint8_t central_count)
   ble_gap_conn_sec_mode_t sec_mode = BLE_SECMODE_OPEN;
   VERIFY_STATUS(sd_ble_gap_device_name_set(&sec_mode, (uint8_t const *) CFG_DEFAULT_NAME, strlen(CFG_DEFAULT_NAME)), false);
 
+#ifdef NRF52877_XXAA
   // Init Central role
   if (_central_count)  Central.begin();
+#endif /* NRF52832_XXAA */
 
   // Create RTOS Semaphore & Task for BLE Event
   _ble_event_sem = xSemaphoreCreateBinary();
@@ -539,6 +557,8 @@ static inline bool is_tx_power_valid(int8_t power)
   int8_t const accepted[] = { -40, -20, -16, -12, -8, -4, 0, 3, 4 };
 #elif defined( NRF52840_XXAA)
   int8_t const accepted[] = { -40, -20, -16, -12, -8, -4, 0, 2, 3, 4, 5, 6, 7, 8 };
+#else
+  int8_t const accepted[] = { -40, -20, -16, -12, -8, -4, 0, 4 };
 #endif
 
   for (uint32_t i=0; i<sizeof(accepted); i++)
@@ -632,7 +652,11 @@ uint16_t AdafruitBluefruit::connHandle(void)
 
 uint16_t AdafruitBluefruit::getMaxMtu(uint8_t role)
 {
+#ifdef NRF52877_XXAA
   return (role == BLE_GAP_ROLE_PERIPH) ? _sd_cfg.prph.mtu_max : _sd_cfg.central.mtu_max;
+#else
+  return _sd_cfg.prph.mtu_max;
+#endif
 }
 
 BLEConnection* AdafruitBluefruit::Connection(uint16_t conn_hdl)
@@ -795,14 +819,21 @@ void AdafruitBluefruit::_ble_handler(ble_evt_t* evt)
         _connection[conn_hdl] = NULL;
       }
 
+#ifdef NRF52877_XXAA
       // Transmission buffer pool
       uint8_t const hvn_qsize = (para->role == BLE_GAP_ROLE_PERIPH) ? _sd_cfg.prph.hvn_qsize : _sd_cfg.central.hvn_qsize;
       uint8_t const wrcmd_qsize = (para->role == BLE_GAP_ROLE_PERIPH) ? _sd_cfg.prph.wrcmd_qsize : _sd_cfg.central.wrcmd_qsize;
+#else
+      // Transmission buffer pool
+      uint8_t const hvn_qsize = _sd_cfg.prph.hvn_qsize;
+      uint8_t const wrcmd_qsize = _sd_cfg.prph.wrcmd_qsize;
+#endif /* NRF52832_XXAA */
 
       _connection[conn_hdl] = new BLEConnection(conn_hdl, para, hvn_qsize, wrcmd_qsize);
       conn = _connection[conn_hdl];
 
       // Invoke connect callback
+#ifdef NRF52877_XXAA
       if ( conn->getRole() == BLE_GAP_ROLE_PERIPH )
       {
         if ( Periph._connect_cb ) ada_callback(NULL, 0, Periph._connect_cb, conn_hdl);
@@ -812,6 +843,11 @@ void AdafruitBluefruit::_ble_handler(ble_evt_t* evt)
       }
     }
     break;
+#else
+      if ( Periph._connect_cb ) ada_callback(NULL, 0, Periph._connect_cb, conn_hdl);
+    }
+    break;
+#endif
 
     case BLE_GAP_EVT_DISCONNECTED:
     {
@@ -823,6 +859,7 @@ void AdafruitBluefruit::_ble_handler(ble_evt_t* evt)
       if ( !this->connected() ) _setConnLed(false);
 
       // Invoke disconnect callback
+#ifdef NRF52877_XXAA
       if ( conn->getRole() == BLE_GAP_ROLE_PERIPH )
       {
         if ( Periph._disconnect_cb ) ada_callback(NULL, 0, Periph._disconnect_cb, conn_hdl, para->reason);
@@ -835,6 +872,13 @@ void AdafruitBluefruit::_ble_handler(ble_evt_t* evt)
       _connection[conn_hdl] = NULL;
     }
     break;
+#else
+      if ( Periph._disconnect_cb ) ada_callback(NULL, 0, Periph._disconnect_cb, conn_hdl, para->reason);
+      delete _connection[conn_hdl];
+      _connection[conn_hdl] = NULL;
+    }
+    break;
+#endif /* NRF52832_XXAA */
 
     case BLE_GAP_EVT_RSSI_CHANGED:
     {
@@ -859,7 +903,9 @@ void AdafruitBluefruit::_ble_handler(ble_evt_t* evt)
   }
 
   Advertising._eventHandler(evt);
+#ifdef NRF52877_XXAA
   Scanner._eventHandler(evt);
+#endif
 
   /*------------- BLE Peripheral Events -------------*/
   /* Only handle Peripheral events with matched connection handle
@@ -897,6 +943,7 @@ void AdafruitBluefruit::_ble_handler(ble_evt_t* evt)
     Periph._eventHandler(evt);
   }
 
+#ifdef NRF52877_XXAA
   // Central Event Handler (also handle generic non-connection event)
   if ( (conn == NULL) || (conn->getRole() == BLE_GAP_ROLE_CENTRAL) )
   {
@@ -905,6 +952,7 @@ void AdafruitBluefruit::_ble_handler(ble_evt_t* evt)
 
   // Discovery Event Handler
   if ( Discovery.begun() ) Discovery._eventHandler(evt);
+#endif /* NRF52832_XXAA */
 
   // GATTs characteristics event handler
   Gatt._eventHandler(evt);
@@ -993,6 +1041,7 @@ void AdafruitBluefruit::printInfo(void)
     logger.println(_sd_cfg.prph.wrcmd_qsize);
   }
 
+#ifdef NRF52877_XXAA
   if ( _central_count )
   {
     logger.println("Central Connect Setting");
@@ -1013,6 +1062,7 @@ void AdafruitBluefruit::printInfo(void)
     logger.printf(title_fmt, "WrCmd Queue Size");
     logger.println(_sd_cfg.central.wrcmd_qsize);
   }
+#endif /* NRF52832_XXAA */
 
   /*------------- Settings -------------*/
   logger.println("\n--------- BLE Settings ---------");
@@ -1029,7 +1079,9 @@ void AdafruitBluefruit::printInfo(void)
   // Max Connections
   logger.printf(title_fmt, "Max Connections");
   logger.printf("Peripheral = %d, ", _prph_count);
+#ifdef NRF52877_XXAA
   logger.printf("Central = %d ", _central_count);
+#endif
   logger.println();
 
   // Address
@@ -1059,12 +1111,14 @@ void AdafruitBluefruit::printInfo(void)
     bond_print_list(BLE_GAP_ROLE_PERIPH);
   }
 
+#ifdef NRF52877_XXAA
   if ( _central_count )
   {
     logger.printf(title_fmt, "Central Paired Devices");
     logger.println();
     bond_print_list(BLE_GAP_ROLE_CENTRAL);
   }
+#endif /* NRF52832_XXAA */
 
   logger.println();
 }

@@ -57,24 +57,6 @@
 #include "BLEGatt.h"
 #include "BLESecurity.h"
 
-// Services
-#include "services/BLEDis.h"
-#include "services/BLEDfu.h"
-#include "services/BLEUart.h"
-#include "services/BLEBas.h"
-#include "services/BLEBeacon.h"
-#include "services/BLEHidGeneric.h"
-#include "services/BLEHidAdafruit.h"
-#include "services/BLEMidi.h"
-#include "services/EddyStone.h"
-
-#include "clients/BLEAncs.h"
-#include "clients/BLEClientUart.h"
-#include "clients/BLEClientDis.h"
-#include "clients/BLEClientCts.h"
-#include "clients/BLEClientHidAdafruit.h"
-#include "clients/BLEClientBas.h"
-
 #include "utility/AdaCallback.h"
 #include "utility/bonding.h"
 
@@ -90,7 +72,9 @@ enum
 enum
 {
   CONN_CFG_PERIPHERAL = 1,
+#ifdef NRF52877_XXAA
   CONN_CFG_CENTRAL = 2,
+#endif
 };
 
 extern "C"
@@ -110,14 +94,18 @@ class AdafruitBluefruit
     /* Lower Level Classes (Bluefruit.Advertising.*, etc.)
      *------------------------------------------------------------------*/
     BLEPeriph          Periph;
+#ifdef NRF52877_XXAA
     BLECentral         Central;
+#endif
     BLESecurity        Security;
     BLEGatt            Gatt;
 
     BLEAdvertising     Advertising;
     BLEAdvertisingData ScanResponse;
+#ifdef NRF52877_XXAA
     BLEScanner         Scanner;
     BLEDiscovery       Discovery;
+#endif
 
     /*------------------------------------------------------------------*/
     /* SoftDevice Configure Functions, must call before begin().
@@ -129,9 +117,12 @@ class AdafruitBluefruit
 
     // Configure Bandwidth for connections
     void configPrphConn        (uint16_t mtu_max, uint16_t event_len, uint8_t hvn_qsize, uint8_t wrcmd_qsize);
-    void configCentralConn     (uint16_t mtu_max, uint16_t event_len, uint8_t hvn_qsize, uint8_t wrcmd_qsize);
     void configPrphBandwidth   (uint8_t bw);
+
+#ifdef NRF52877_XXAA
+    void configCentralConn     (uint16_t mtu_max, uint16_t event_len, uint8_t hvn_qsize, uint8_t wrcmd_qsize);
     void configCentralBandwidth(uint8_t bw);
+#endif
 
     bool begin(uint8_t prph_count = 1, uint8_t central_count = 0);
 
@@ -146,6 +137,7 @@ class AdafruitBluefruit
     uint8_t  getName            (char* name, uint16_t bufsize);
 
     // Supported tx_power values depending on mcu:
+    // - nRF52810: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm and +4dBm.
     // - nRF52832: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +3dBm and +4dBm.
     // - nRF52840: -40dBm, -20dBm, -16dBm, -12dBm, -8dBm, -4dBm, 0dBm, +2dBm, +3dBm, +4dBm, +5dBm, +6dBm, +7dBm and +8dBm.
     bool     setTxPower         (int8_t power);
@@ -217,7 +209,10 @@ class AdafruitBluefruit
     }_sd_cfg;
 
     uint8_t _prph_count;
+
+#ifdef NRF52877_XXAA
     uint8_t _central_count;
+#endif
 
     int8_t _tx_power;
 
@@ -252,7 +247,10 @@ class AdafruitBluefruit
     friend void SD_EVT_IRQHandler(void);
     friend void adafruit_ble_task(void* arg);
     friend void adafruit_soc_task(void* arg);
+
+#ifdef NRF52877_XXAA
     friend class BLECentral;
+#endif
 };
 
 extern AdafruitBluefruit Bluefruit;

@@ -1875,7 +1875,7 @@ typedef struct {                                /*!< (@ 0x4001F000) PPI Structur
 
 typedef struct {                                /*!< (@ 0x40026000) FPU Structure                                              */
   __IM  uint32_t  UNUSED;                       /*!< (@ 0x00000000) Unused.                                                    */
-} NRF_FPU_Type;                                 /*!< Size = 4 (0x4)                   
+} NRF_FPU_Type;                                 /*!< Size = 4 (0x4)                                                            */
 
 
 /** @} */ /* End of group Device_Peripheral_peripherals */

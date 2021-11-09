@@ -148,6 +148,7 @@ bool BLEAdvertisingData::addService(BLEService& service1, BLEService& service2, 
   return addUuid(service1.uuid, service2.uuid, service3.uuid, service4.uuid);
 }
 
+#ifdef NRF52877_XXAA
 bool BLEAdvertisingData::addService(BLEClientService& service)
 {
   // Central service is added to Solicitation UUID
@@ -166,6 +167,7 @@ bool BLEAdvertisingData::addService(BLEClientService& service)
 
   return false;
 }
+#endif /* NRF52877_XXAA */
 
 /*------------------------------------------------------------------*/
 /* Adding Others
@@ -320,6 +322,7 @@ bool BLEAdvertising::isRunning(void)
   return _runnning;
 }
 
+#ifdef NRF52877_XXAA
 bool BLEAdvertising::setBeacon(BLEBeacon& beacon)
 {
   return beacon.start(*this);
@@ -329,6 +332,7 @@ bool BLEAdvertising::setBeacon(EddyStoneUrl& eddy_url)
 {
   return eddy_url.start();
 }
+#endif /* NRF52877_XXAA */
 
 void BLEAdvertising::restartOnDisconnect(bool enable)
 {

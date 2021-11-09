@@ -69,10 +69,12 @@ class BLEGatt
     bool _addCharacteristic(BLECharacteristic* chr);
     bool _addService(BLEService* svc);
 
+#ifdef NRF52877_XXAA
     // Client
     bool _addCharacteristic(BLEClientCharacteristic* chr);
     void _removeCharacteristic(BLEClientCharacteristic* chr);
     bool _addService(BLEClientService* svc);
+#endif /* NRF52877_XXAA */
 
     void _eventHandler(ble_evt_t* evt);
 
@@ -85,6 +87,7 @@ class BLEGatt
       BLECharacteristic* chr_list[CFG_GATT_MAX_SERVER_CHARS];
     } _server;
 
+#ifdef NRF52877_XXAA
     struct {
       uint8_t                  svc_count;
       BLEClientService*        svc_list[CFG_GATT_MAX_CLIENT_SERVICE];
@@ -92,6 +95,7 @@ class BLEGatt
       uint8_t                  chr_count;
       BLEClientCharacteristic* chr_list[CFG_GATT_MAX_CLIENT_CHARS];
     }_client;
+#endif /* NRF52877_XXAA */
 
     AdaMsg             _adamsg;
 };

@@ -33,6 +33,7 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 /**************************************************************************/
+#ifdef NRF52877_XXAA
 #ifndef BLECLIENTCHARACTERISTIC_H_
 #define BLECLIENTCHARACTERISTIC_H_
 
@@ -132,3 +133,4 @@ class BLEClientCharacteristic
 };
 
 #endif /* BLECLIENTCHARACTERISTIC_H_ */
+#endif /* NRF52832_XXAA */

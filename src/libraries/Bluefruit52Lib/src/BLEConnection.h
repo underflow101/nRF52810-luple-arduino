@@ -41,6 +41,35 @@
 #include "bluefruit_common.h"
 #include "utility/bonding.h"
 
+/**@brief Data Length Update Procedure parameters. */
+typedef struct
+{
+  uint16_t max_tx_octets;   /**< Maximum number of payload octets that a Controller supports for transmission of a single Link Layer Data Channel PDU. */
+  uint16_t max_rx_octets;   /**< Maximum number of payload octets that a Controller supports for reception of a single Link Layer Data Channel PDU. */
+  uint16_t max_tx_time_us;  /**< Maximum time, in microseconds, that a Controller supports for transmission of a single Link Layer Data Channel PDU. */
+  uint16_t max_rx_time_us;  /**< Maximum time, in microseconds, that a Controller supports for reception of a single Link Layer Data Channel PDU. */
+} ble_gap_data_length_params_t;
+
+/**@brief Event structure for @ref BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST. */
+typedef struct
+{
+  ble_gap_data_length_params_t peer_params; /**< Peer data length parameters. */
+} ble_gap_evt_data_length_update_request_t;
+
+/**@brief Event structure for @ref BLE_GAP_EVT_DATA_LENGTH_UPDATE. */
+typedef struct
+{
+  ble_gap_data_length_params_t effective_params;  /**< The effective data length parameters. */
+} ble_gap_evt_data_length_update_t;
+
+/**@brief Data Length Update Procedure local limitation. */
+typedef struct
+{
+  uint16_t tx_payload_limited_octets; /**< If > 0, the requested TX packet length is too long by this many octets. */
+  uint16_t rx_payload_limited_octets; /**< If > 0, the requested RX packet length is too long by this many octets. */
+  uint16_t tx_rx_time_limited_us;     /**< If > 0, the requested combination of TX and RX packet lengths is too long by this many microseconds. */
+} ble_gap_data_length_limitation_t;
+
 class BLEConnection
 {
   private:

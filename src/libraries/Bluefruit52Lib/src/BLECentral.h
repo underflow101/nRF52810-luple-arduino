@@ -33,6 +33,8 @@
     SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 /**************************************************************************/
+
+#ifdef NRF52877_XXAA
 #ifndef BLECENTRAL_H_
 #define BLECENTRAL_H_
 
@@ -83,3 +85,4 @@ class BLECentral
 
 
 #endif /* BLECENTRAL_H_ */
+#endif /* NRF52832_XXAA */

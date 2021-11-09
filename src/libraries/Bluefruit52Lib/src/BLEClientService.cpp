@@ -34,6 +34,7 @@
 */
 /**************************************************************************/
 
+#ifdef NRF52877_XXAA
 #include "bluefruit.h"
 
 // Last service that is discovered
@@ -106,3 +107,5 @@ void BLEClientService::disconnect(void)
   _conn_hdl   = BLE_CONN_HANDLE_INVALID;
   // inherited service may want to clean up its own characteristic
 }
+
+#endif /* NRF52832_XXAA */
