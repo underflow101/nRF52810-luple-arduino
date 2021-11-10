@@ -6,47 +6,49 @@
 
 const uint32_t g_ADigitalPinMap[] = {
   // D0 - D7
-  0,
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
+  0,  // XL1
+  1,  // XL2
+  2,  // A0 / BAT ADC
+  3,  // A1 / CHG_EN#
+  4,  // A2
+  5,  // UNUSED
+  6,  // UNUSED
+  7,  // HALL INT
 
   // D8 - D13
-  8,
+  8,  // UNUSED
+  9,  // UNUSED
+  10, // UNUSED
 
-  9,
-  10,
+  11, // GPIO11
 
-  11,
+  12, // PWM0
+  13, // PWM1
 
-  12,
-  13,
-  14,
+  14, // GPIO #14
+  15, // GPIO #15
+  16, // GPIO #16
+  17, // GPIO #17
+  18, // GPIO #18
 
-  15,
-  16,
+  19, // TXD
+  20, // RXD
 
-  // function set pins
-  17,
-  18,
-  19,
-  20,
-  21,
-  22,
-  23,
-  24,
+  21, // UNUSED
 
-  25,
-  26,
-  27,
-  28,
-  29,
-  30,
-  31,
+  22, // GPIO #22
+  23, // GPIO #23
+  24, // GPIO #24
+
+  25, // UNUSED
+
+  26, // LIGHT INT
+  27, // SCL1 (LIGHT)
+  28, // SDA1 (LIGHT)
+
+  29, // ACC INT
+  30, // SDA2 (ACC)
+  31, // SCL2 (ACC)
 };
 
 void initVariant()

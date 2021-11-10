@@ -51,7 +51,9 @@
 #elif defined(NRF5340_XXAA_NETWORK)
     #include <soc/nrfx_irqs_nrf5340_network.h>
 #else
-    #error "Unknown device."
+    #include <soc/nrfx_irqs_nrf52810.h>
 #endif
+
+#include <soc/nrfx_irqs_nrf52810.h>
 
 #endif // NRFX_IRQS_H__

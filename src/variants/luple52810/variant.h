@@ -31,8 +31,8 @@ extern "C"
 #define NUM_ANALOG_OUTPUTS   (0u)
 
 // LEDs
-#define PIN_LED1             (17)
-#define PIN_LED2             (19)
+#define PIN_LED1             (12)
+#define PIN_LED2             (13)
 
 #define LED_BUILTIN          PIN_LED1
 #define LED_CONN             PIN_LED2
@@ -65,10 +65,10 @@ static const uint8_t A7  = PIN_A7 ;
 #define ADC_RESOLUTION    12
 
 // Other pins
-#define PIN_AREF           (24)
-#define PIN_VBAT           PIN_A0
-#define PIN_NFC1           (9)
-#define PIN_NFC2           (10)
+#define PIN_AREF           (3)
+#define PIN_VBAT           (2)
+#define PIN_NFC1           (5)
+#define PIN_NFC2           (6)
 
 static const uint8_t AREF = PIN_AREF;
 
@@ -83,11 +83,11 @@ static const uint8_t AREF = PIN_AREF;
  */
 #define SPI_INTERFACES_COUNT 0
 
-#define PIN_SPI_MISO         (14)
-#define PIN_SPI_MOSI         (13)
-#define PIN_SPI_SCK          (12)
+#define PIN_SPI_MISO         (8)
+#define PIN_SPI_MOSI         (9)
+#define PIN_SPI_SCK          (10)
 
-static const uint8_t SS   = 27 ;
+static const uint8_t SS   = 14 ;
 static const uint8_t MOSI = PIN_SPI_MOSI ;
 static const uint8_t MISO = PIN_SPI_MISO ;
 static const uint8_t SCK  = PIN_SPI_SCK ;

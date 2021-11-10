@@ -55,7 +55,8 @@
   #define SERIAL_8E1	((UARTE_CONFIG_STOP_One << UARTE_CONFIG_STOP_Pos) | (UARTE_CONFIG_PARITY_Included << UARTE_CONFIG_PARITY_Pos))
   #define SERIAL_8E2	((UARTE_CONFIG_STOP_Two << UARTE_CONFIG_STOP_Pos) | (UARTE_CONFIG_PARITY_Included << UARTE_CONFIG_PARITY_Pos))
 #else
-  #error Unsupported MCU
+  #define SERIAL_8N1	(UARTE_CONFIG_PARITY_Excluded << UARTE_CONFIG_PARITY_Pos)
+  #define SERIAL_8E1	(UARTE_CONFIG_PARITY_Included << UARTE_CONFIG_PARITY_Pos)
 #endif
 
 class HardwareSerial : public Stream
@@ -77,9 +78,9 @@ class HardwareSerial : public Stream
 extern void serialEventRun(void) __attribute__((weak));
 extern void serialEvent() __attribute__((weak));
 
-#ifndef NRF52832_XXAA // 832 only has 1 UART for Serial
+// #ifndef NRF52832_XXAA // 832 only has 1 UART for Serial
 extern void serialEvent1() __attribute__((weak));
 extern void serialEvent2() __attribute__((weak));
-#endif
+// #endif
 
 #endif

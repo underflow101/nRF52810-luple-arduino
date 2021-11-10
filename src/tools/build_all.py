@@ -46,7 +46,7 @@ def build_examples(variant):
 
     for sketch in all_examples:
         # skip TinyUSB library examples for nRF52832
-        if (variant == 'feather52832' or variant == 'luple52810') and "libraries/Adafruit_TinyUSB_Arduino" in sketch:
+        if (variant == 'luple52810') and "libraries/Adafruit_TinyUSB_Arduino" in sketch:
             continue
 
         start_time = time.monotonic()
