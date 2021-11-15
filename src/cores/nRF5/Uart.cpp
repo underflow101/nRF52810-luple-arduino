@@ -242,11 +242,8 @@ size_t Uart::write(const uint8_t *buffer, size_t size)
 }
 
 //------------- Serial1 (or Serial in case of nRF52832) -------------//
-#ifdef NRF52832_XXAA
   Uart Serial( NRF_UARTE0, UARTE0_UART0_IRQn, PIN_SERIAL_RX, PIN_SERIAL_TX );
-#else
-  Uart Serial1( NRF_UARTE0, UARTE0_UART0_IRQn, PIN_SERIAL1_RX, PIN_SERIAL1_TX );
-#endif
+  // Uart Serial1( NRF_UARTE0, UARTE0_UART0_IRQn, PIN_SERIAL1_RX, PIN_SERIAL1_TX );
 
 extern "C"
 {

@@ -28,7 +28,7 @@ luple52810.build.core=nRF5
 luple52810.build.variant=luple52810
 luple52810.build.usb_manufacturer="Luple"
 luple52810.build.usb_product="Luple nRF52810"
-luple52810.build.extra_flags=-DNRF52810_XXAA -DNRF52
+luple52810.build.extra_flags=-DNRF52810_XXAA
 luple52810.build.ldscript=nrf52810_s112.ld
 
 # SoftDevice Menu
